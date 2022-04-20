@@ -1,4 +1,5 @@
 import { Router } from "express"
+import { validateProducts } from "../validator"
 import {
     getProducts,
     createProduct,
@@ -9,7 +10,7 @@ import {
 const router = Router()
 
 // Crear productos
-router.post('/', createProduct)
+router.post('/', validateProducts, createProduct)
 
 // Obtener productos
 router.get('/', getProducts)
