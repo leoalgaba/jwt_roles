@@ -2,6 +2,7 @@ import express, {Application} from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import productsRoute from './routes/products'
+import authRoute from './routes/auth'
 
 class Server {
     app: Application
@@ -20,6 +21,7 @@ class Server {
     }
     routes() {
         this.app.use('/api/products', productsRoute)
+        this.app.use('/api/auth', authRoute)
     }
     start() {
         this.app.listen(this.port, () => {
