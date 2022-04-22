@@ -1,5 +1,14 @@
-import {prop, getModelForClass} from '@typegoose/typegoose'
+import {prop, getModelForClass, modelOptions} from '@typegoose/typegoose'
 
+// opciones de modelo
+@modelOptions({
+    schemaOptions: {
+        timestamps: true,
+        versionKey: false
+    }
+})
+
+// esquema producto
 class Product {
 
     @prop({required: true})
@@ -16,6 +25,7 @@ class Product {
 
 }
 
+// exportar modelo
 const ProductModel = getModelForClass(Product)
 export default ProductModel
 

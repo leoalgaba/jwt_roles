@@ -3,6 +3,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import productsRoute from './routes/products'
 import authRoute from './routes/auth'
+import { createRoles } from './initialSetup'
 
 class Server {
     app: Application
@@ -27,6 +28,9 @@ class Server {
         this.app.listen(this.port, () => {
             console.log(`\nServidor corriendo en el puerto ${this.port}\n`)
         })
+
+    createRoles()
+
     }
 }
 
