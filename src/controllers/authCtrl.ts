@@ -2,6 +2,7 @@ import {Request,Response} from 'express'
 import User from "../models/user"
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import  Role  from '../models/roles'
 
 //Registrarse
 export const registro = async (req: Request, res: Response) => {
@@ -12,8 +13,18 @@ export const registro = async (req: Request, res: Response) => {
         return res.status(400).json({error: true, msg: 'El usuario existe'})
     }
 
-    // Grabamos usuario
     const newUser = new User(req.body)
+
+    // roles
+    if (req.body.roles) {
+        const foundRoles = await Role.find({ name: { $in: req.body.roles } })
+        newUser.roles = foundRoles.map((role) => role._id)
+    } else {
+        const role = await Role.findOne({ name: 'user' })
+        newUser.roles = [role!._id]
+    }
+
+    // Grabamos usuario
     try {
         await newUser.save()
         return res.status(201).json(newUser)

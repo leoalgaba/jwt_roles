@@ -17,6 +17,9 @@ import bcrypt from 'bcryptjs'
 
 // Encriptar constraseña
 @pre<User>('save', async function() {
+    if (!this.isModified('password')) {
+        return
+    }    
     this.password = await bcrypt.hash(this.password, 10)
 })
 
@@ -33,7 +36,7 @@ class User {
     password: string
 
     @prop({ref: () => Role})
-    role: Ref<Role> []
+    roles: Ref<Role> []
 
 }
 
